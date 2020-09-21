@@ -148,6 +148,7 @@ namespace PM3D {
 
 		// Création d’un tampon pour les constantes du VS 
 		D3D11_BUFFER_DESC bd; 
+		//petit test des famille lalala
 		ZeroMemory(&bd, sizeof(bd)); 
 		bd. Usage = D3D11_USAGE_DEFAULT; 
 		bd. ByteWidth = sizeof(matWorld);
