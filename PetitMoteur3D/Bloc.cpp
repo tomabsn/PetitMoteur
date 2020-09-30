@@ -104,6 +104,8 @@ namespace PM3D {
 
 		matWorld = XMMatrixIdentity();
 
+		rotation = 0.0f;
+
 		InitShaders();
 
 	}
@@ -147,8 +149,7 @@ namespace PM3D {
 
 
 		// Création d’un tampon pour les constantes du VS 
-		D3D11_BUFFER_DESC bd; 
-		//petit test des famille lalala
+		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd)); 
 		bd. Usage = D3D11_USAGE_DEFAULT; 
 		bd. ByteWidth = sizeof(matWorld);

@@ -23,6 +23,7 @@ const float EcartTemps = 1.0f / static_cast<float>(IMAGESPARSECONDE);
 //        le dispositif Direct3D), l'utilisation d'un singleton 
 //        nous simplifiera plusieurs aspects.
 //
+
 template <typename T, typename TClasseDispositif> class CMoteur :public CSingleton<T>
 {
 public:
@@ -54,7 +55,7 @@ public:
 		InitialisationsSpecific();
 
 		// * Initialisation du dispositif de rendu
-		pDispositif = CreationDispositifSpecific(CDS_FENETRE);
+		pDispositif = CreationDispositifSpecific(CDS_PLEIN_ECRAN);
 
 		// * Initialisation de la scène
 		InitScene();
@@ -68,6 +69,7 @@ public:
 
 	virtual bool Animation()
 	{
+		//Technique afficher -> préparer 
 		// méthode pour lire l'heure et calculer le 
 		// temps écoulé
 		const int64_t TempsCompteurCourant = GetTimeSpecific();
@@ -133,7 +135,7 @@ protected:
 		matView = XMMatrixLookAtLH( XMVectorSet( 0.0f, 0.0f,-10.0f, 1.0f ), XMVectorSet( 0.0f, 0.0f, 0.0f, 1.0f ), XMVectorSet( 0.0f, 1.0f, 0.0f, 1.0f ) );
 		float champDeVision = XM_PI / 4; 
 		// 45 degrés 
-		float ratioDAspect = 1.0; 
+		float ratioDAspect = static_cast<float>(pDispositif->GetLargeur()) / static_cast<float>(pDispositif->GetHauteur());;
 		// horrible, il faudra corriger ça 
 		const float planRapproche = 2.0; 
 		const float planEloigne = 20.0; 

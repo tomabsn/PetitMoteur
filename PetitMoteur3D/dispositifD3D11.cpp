@@ -2,6 +2,7 @@
 #include "resource.h"
 #include "DispositifD3D11.h"
 #include "Util.h"
+#include "InfoDispositif.h"
 
 namespace PM3D
 {
@@ -16,6 +17,7 @@ CDispositifD3D11::~CDispositifD3D11()
 	DXRelacher(pImmediateContext);
 	DXRelacher(pSwapChain);
 	DXRelacher(pD3DDevice);
+	pSwapChain->SetFullscreenState(FALSE, NULL); // passer en mode fenêtré
 }
 
 //	FONCTION : CDispositifD3D11, constructeur paramètré 
@@ -41,8 +43,9 @@ CDispositifD3D11::CDispositifD3D11(
 
 	D3D_FEATURE_LEVEL featureLevels[] =
 	{
-		D3D_FEATURE_LEVEL_11_1,
-		D3D_FEATURE_LEVEL_11_0,
+		D3D_FEATURE_LEVEL_11_0, 
+		D3D_FEATURE_LEVEL_10_1, 
+		D3D_FEATURE_LEVEL_10_0,
 	};
 	const UINT numFeatureLevels = ARRAYSIZE(featureLevels);
 
@@ -53,34 +56,65 @@ CDispositifD3D11::CDispositifD3D11(
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 
+	// Obtenir les informations de l’adaptateur courant 
+	CInfoDispositif Dispo0( ADAPTATEUR_COURANT );
+
+	width = 1024;
+	height = 768;
+
 	switch (cdsMode)
 	{
 	case CDS_FENETRE:
-		RECT rc;
-		GetClientRect(hWnd, &rc);
-		width = rc.right - rc.left;
-		height = rc.bottom - rc.top;
-
-		sd.BufferCount = 1;
-		sd.BufferDesc.Width = width;
-		sd.BufferDesc.Height = height;
-		sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		sd.BufferDesc.RefreshRate.Numerator = 60;
-		sd.BufferDesc.RefreshRate.Denominator = 1;
-		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		sd.OutputWindow = hWnd;
-		sd.SampleDesc.Count = 1;
-		sd.SampleDesc.Quality = 0;
 		sd.Windowed = TRUE;
 
 		break;
 
-	default:
-		width = 0;
-		height = 0;
-		assert(false); // Pas encore implémenté.
+	case CDS_PLEIN_ECRAN:
+
+		sd.Windowed = FALSE;
+
+		break;
+
 	}
 
+	DXGI_MODE_DESC desc; 
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; 
+	desc.Height = height; 
+	desc.Width = width; 
+	desc.RefreshRate.Numerator = 60; 
+	desc.RefreshRate.Denominator = 1; 
+	desc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED; 
+	desc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED; 
+	CInfoDispositif DispoVoulu(desc); 
+	DispoVoulu.GetDesc(desc); 
+	width = desc.Width;
+	height = desc.Height; 
+
+	largeurEcran = width;
+	hauteurEcran = height;
+	sd.BufferCount = 1; 
+	sd.BufferDesc.Width = desc.Width; 
+	sd.BufferDesc.Height = desc.Height; 
+	sd.BufferDesc.Format = desc.Format; 
+	sd.BufferDesc.RefreshRate.Numerator = desc.RefreshRate.Numerator; 
+	sd.BufferDesc.RefreshRate.Denominator = desc.RefreshRate.Denominator; 
+	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; 
+	sd.OutputWindow = hWnd; 
+	sd.SampleDesc.Count = 1; 
+	sd.SampleDesc.Quality = 0;
+
+	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+
+
+	// régler le problème no 1 du passage en mode fenêtré RECT rcClient,
+	POINT ptDiff; 
+	RECT rcClient;
+	RECT rcWindow;
+	GetClientRect(hWnd, &rcClient); 
+	GetWindowRect(hWnd, &rcWindow); 
+	ptDiff.x = (rcWindow.right - rcWindow.left) - rcClient.right;
+	ptDiff.y = (rcWindow.bottom - rcWindow.top) - rcClient.bottom; 
+	MoveWindow(hWnd, rcWindow.left, rcWindow.top, width + ptDiff.x, height + ptDiff.y, TRUE);
 	DXEssayer(D3D11CreateDeviceAndSwapChain(
 		0,
 		D3D_DRIVER_TYPE_HARDWARE,
