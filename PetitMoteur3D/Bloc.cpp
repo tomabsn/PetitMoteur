@@ -21,6 +21,8 @@ const uint16_t index_bloc[36] = {
 };
 
 namespace PM3D {
+
+
 	CBloc::CBloc(const float dx, const float dy, const float dz, CDispositifD3D11* pDispositif_) : pDispositif(pDispositif_) {
 		rotation = 0.0f;
 		XMFLOAT3 point[8] = {

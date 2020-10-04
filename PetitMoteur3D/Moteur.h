@@ -55,7 +55,7 @@ public:
 		InitialisationsSpecific();
 
 		// * Initialisation du dispositif de rendu
-		pDispositif = CreationDispositifSpecific(CDS_PLEIN_ECRAN);
+		pDispositif = CreationDispositifSpecific(CDS_FENETRE);
 
 		// * Initialisation de la scène
 		InitScene();
@@ -148,7 +148,7 @@ protected:
 	bool InitObjets() {
 
 		ListeScene.emplace_back(std::make_unique<CBloc>(2.0f, 2.0f, 2.0f, pDispositif));
-
+		//ListeScene.emplace_back(std::make_unique<CTerrain>());
 		return true;
 	}
 
