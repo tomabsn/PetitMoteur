@@ -44,6 +44,7 @@ namespace PM3D {
 		XMFLOAT3 n4(-1.0f, 0.0f, 0.0f); // face gauche
 		XMFLOAT3 n5(1.0f, 0.0f, 0.0f); // face droite
 
+
 		CSommetBloc sommets[24];
 
 		// Le devant du bloc 
