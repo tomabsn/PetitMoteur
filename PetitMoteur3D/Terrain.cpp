@@ -21,7 +21,7 @@ namespace PM3D {
 
 		for (int y = 0; y != height; ++y) {
 			for (int x = 0; x != width; ++x) {
-				sommets[width * y + x] = CSommetTerrain(XMFLOAT3(x / dxy, y / dxy, img.atXY(x, y) / dz));
+				sommets[width * y + x] = CSommetTerrain(XMFLOAT3(-x / dxy, -y / dxy, -img.atXY(x, y) / dz));
 			}
 		}
 	}
@@ -52,7 +52,7 @@ namespace PM3D {
 				XMFLOAT3 p8;
 
 				v1 = v2 = v3 = v4 = v6 = v8 = XMVectorSet(0, 0, 0, 0);
-				n1 = n2 = n3 = n4 = n6 = n8 = XMVectorSet(0, 0, -1, 0);
+				n1 = n2 = n3 = n4 = n6 = n8 = XMVectorSet(0, 0, 1, 0);
 				
 				//calcul de vecteur !
 				if (y < height - 1) {
