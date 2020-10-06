@@ -25,6 +25,7 @@ using json = nlohmann::json;
 #include <vector>
 #include <memory>
 #include <d3dcompiler.h>
+#include <cstdlib>
 using namespace std;
 
 // TODO : faites référence ici aux en-têtes supplémentaires nécessaires au programme

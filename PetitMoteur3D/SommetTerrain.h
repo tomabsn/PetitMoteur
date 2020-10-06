@@ -6,6 +6,7 @@ namespace PM3D {
 	public:
 		CSommetTerrain() = default;
 		CSommetTerrain(const XMFLOAT3& position, const XMFLOAT3& normal);
+		CSommetTerrain(const XMFLOAT3& position);
 	public:
 		static UINT numElements;
 		static D3D11_INPUT_ELEMENT_DESC layout[];

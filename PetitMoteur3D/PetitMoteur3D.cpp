@@ -27,10 +27,10 @@ int APIENTRY _tWinMain(
 		// Spécifiques à une application Windows
 		rMoteur.SetWindowsAppInstance(hInstance);
 
-		CTerrain terrain(1.0f,1.0f,"hills.bmp");
+		CTerrain terrain(1.0f,1.0f,"desert.bmp");
 		terrain.CalculerNormale();
 		terrain.ConstruireIndex();
-		//terrain.Sauver("save.json");
+		terrain.Sauver("save.obj");
 		// Initialisation du moteur
 		rMoteur.Initialisations();
 

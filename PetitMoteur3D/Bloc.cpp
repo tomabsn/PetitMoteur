@@ -166,7 +166,7 @@ namespace PM3D {
 		pPSBlob->Release(); // On n’a plus besoin du blob
 	}
 
-	void CBloc::Anime(float tempsEcoule) {
+	void CBloc::Anime([[maybe_unused]]float tempsEcoule) {
 		rotation = rotation + ((XM_PI * 0.02f) / 3.0f * tempsEcoule); // modifier la matrice de l’objet bloc 
 		matWorld = XMMatrixRotationX(rotation); 
 	}
