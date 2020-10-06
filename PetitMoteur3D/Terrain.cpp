@@ -12,13 +12,16 @@ namespace PM3D {
 		const CImg<float> img(image);
 		width = img.width();
 		height = img.height();
+
+
+
 		nbrSommets = width * height;
 		nbrPolygones = (width - 1) * (height - 1) * 2;
 		sommets = new CSommetTerrain[nbrSommets];
 
 		for (int y = 0; y != height; ++y) {
 			for (int x = 0; x != width; ++x) {
-				sommets[height * y + x] = CSommetTerrain(XMFLOAT3(x / dxy, y / dxy, img.atXY(x, y) / dz));
+				sommets[width * y + x] = CSommetTerrain(XMFLOAT3(x / dxy, y / dxy, img.atXY(x, y) / dz));
 			}
 		}
 	}
@@ -49,7 +52,7 @@ namespace PM3D {
 				XMFLOAT3 p8;
 
 				v1 = v2 = v3 = v4 = v6 = v8 = XMVectorSet(0, 0, 0, 0);
-				n1 = n2 = n3 = n4 = n6 = n8 = XMVectorSet(0, 0, 1, 0);
+				n1 = n2 = n3 = n4 = n6 = n8 = XMVectorSet(0, 0, -1, 0);
 				
 				//calcul de vecteur !
 				if (y < height - 1) {
@@ -89,15 +92,17 @@ namespace PM3D {
 					n3 = XMVector3Cross(v3, v8);
 					n8 = XMVector3Cross(v8, v4);
 				}
-				if (y < height - 1 && x > 0) n4 = XMVector3Cross(v4, v1);
+				if (y < height - 1 && x > 0) {
+					n4 = XMVector3Cross(v4, v1);
+				}
 
 				n1 = n2 + n3 + n3 + n6 + n8 +n1;
 
-				n1 = XMVector3Normalize(n1);
+				//n1 = XMVector3Normalize(n1);
 				XMFLOAT3 resultat;
 				XMStoreFloat3(&resultat, n1);
 
-				sommets[height * y + x].m_Normal = resultat;
+				sommets[width * y + x].m_Normal = resultat;
 			}
 		}
 	}
@@ -107,12 +112,12 @@ namespace PM3D {
 		int k = 0;
 		for (int y = 0; y != height-1; ++y) {
 			for (int x = 0; x != width-1; ++x) {
-				pIndices[k++] = y * height + x;
-				pIndices[k++] = (y + 1) * height + (x + 1);
-				pIndices[k++] = y * height + (x + 1);
-				pIndices[k++] = y * height + x;
-				pIndices[k++] = (y + 1) * height + x;
-				pIndices[k++] = (y + 1) * height + (x + 1);
+				pIndices[k++] = y * width + x;
+				pIndices[k++] = (y + 1) * width + (x + 1);
+				pIndices[k++] = y * width + (x + 1);
+				pIndices[k++] = y * width + x;
+				pIndices[k++] = (y + 1) * width + x;
+				pIndices[k++] = (y + 1) * width + (x + 1);
 			}
 		}
 	}
@@ -124,15 +129,15 @@ namespace PM3D {
 			for (int i = 0; i != nbrSommets; ++i) {
 				file << "v " << sommets[i].m_Position.x << " " << sommets[i].m_Position.y << " " << sommets[i].m_Position.z << "\n";
 			}
-			file << "vt 1.0 0.0\n";
+			
 			for (int i = 0; i != nbrSommets; ++i) {
 				file << "vn " << sommets[i].m_Normal.x << " " << sommets[i].m_Normal.y << " " << sommets[i].m_Normal.z << "\n";
 			}
-			for (int j = 0; j < nbrPolygones*3 - 3; j += 4) {
+			for (int j = 0; j < nbrPolygones*3 - 3; j += 3) {
 				//f v1 / vt1 / vn1 v2 / vt2 / vn2 v3 / vt3 / vn3
-				file << "f " << pIndices[j] << "//" << pIndices[j]+1 << " ";
-				file << pIndices[j + 1] << "//" << pIndices[j+1] + 1 << " ";
-				file << pIndices[j + 2] << "//" << pIndices[j+2] + 1 << " ";
+				file << "f " << pIndices[j] + 1 << "//" << pIndices[j] + 1 << " ";
+				file << pIndices[j + 1] +1<< "//" << pIndices[j+1] + 1 << " ";
+				file << pIndices[j + 2] +1<< "//" << pIndices[j+2] + 1 << " ";
 				file << '\n';
 			}
 		}
