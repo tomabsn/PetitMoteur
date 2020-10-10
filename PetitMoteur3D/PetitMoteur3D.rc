@@ -132,6 +132,9 @@ STRINGTABLE
 BEGIN
     DXE_CREATION_PS         "Erreur création du PS"
     DXE_CREATION_VS         "Erreur création du VS"
+    DXE_ERREURCREATIONTEXTURE "Erreur de création de texture"
+    DXE_ERREURCREATIONDEPTHSTENCILTARGET 
+                            "Erreur de création du depth stencil view"
 END
 
 #endif    // Français (Canada) resources

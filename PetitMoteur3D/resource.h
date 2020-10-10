@@ -21,6 +21,8 @@
 #define DXE_FICHIER_PS                  111
 #define DXE_CREATION_PS                 112
 #define DXE_CREATION_VS                 113
+#define DXE_ERREURCREATIONTEXTURE       115
+#define DXE_ERREURCREATIONDEPTHSTENCILTARGET 116
 #define IDR_MAINFRAME                   128
 #define IDC_STATIC                      -1
 

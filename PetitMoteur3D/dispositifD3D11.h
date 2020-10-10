@@ -25,12 +25,21 @@ public:
 	ID3D11DeviceContext*    GetImmediateContext() { return pImmediateContext; }
 	IDXGISwapChain*         GetSwapChain() { return pSwapChain; }
 	ID3D11RenderTargetView* GetRenderTargetView() { return pRenderTargetView; }
+	ID3D11DepthStencilView* GetDepthStencilView() { return pDepthStencilView; }
 
 private:
 	ID3D11Device * pD3DDevice;
 	ID3D11DeviceContext*    pImmediateContext;
 	IDXGISwapChain*         pSwapChain;
 	ID3D11RenderTargetView* pRenderTargetView;
+	// Pour le tampon de profondeur
+	ID3D11Texture2D* pDepthTexture;
+	ID3D11DepthStencilView* pDepthStencilView;
+	void InitDepthBuffer();
+
+protected:
+	// Variables d’état 
+	ID3D11RasterizerState* mSolidCullBackRS;
 };
 
 } // namespace PM3D
