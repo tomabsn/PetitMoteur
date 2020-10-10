@@ -187,8 +187,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bloc.cpp" />
-    <ClCompile Include="SommetTerrain.cpp" />
-    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="dispositif.cpp" />
     <ClCompile Include="dispositifD3D11.cpp" />
     <ClCompile Include="Horloge.cpp" />
@@ -206,10 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bloc.h" />
-    <ClInclude Include="CImg.h" />
-    <ClInclude Include="json.hpp" />
-    <ClInclude Include="SommetTerrain.h" />
-    <ClInclude Include="Terrain.h" />
     <ClInclude Include="dispositif.h" />
     <ClInclude Include="dispositifD3D11.h" />
     <ClInclude Include="Horloge.h" />

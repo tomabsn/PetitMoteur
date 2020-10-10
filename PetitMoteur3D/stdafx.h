@@ -14,11 +14,7 @@
 #include <cassert>
 #include <cstdint>
 #include <tchar.h>
-#include "CImg.h"
 #include <iomanip> 
-#include "json.hpp"
-using namespace cimg_library;
-using json = nlohmann::json;
 
 // Fichiers d'en-tête C++ RunTime
 #include <exception>

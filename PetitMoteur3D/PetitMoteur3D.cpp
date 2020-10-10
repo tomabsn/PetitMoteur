@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "PetitMoteur3D.h"
 #include "MoteurWindows.h"
-#include "Terrain.h"
 
 using namespace PM3D;
 
@@ -27,11 +26,6 @@ int APIENTRY _tWinMain(
 		// Spécifiques à une application Windows
 		rMoteur.SetWindowsAppInstance(hInstance);
 
-		CTerrain terrain(1.0f,1.0f,"hills.bmp");
-		terrain.CalculerNormale();
-		terrain.ConstruireIndex();
-		//terrain.Sauver("save.json");
-		// Initialisation du moteur
 		rMoteur.Initialisations();
 
 		// Boucle d'application
