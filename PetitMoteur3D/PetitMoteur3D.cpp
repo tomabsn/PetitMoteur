@@ -26,6 +26,7 @@ int APIENTRY _tWinMain(
 		// Spécifiques à une application Windows
 		rMoteur.SetWindowsAppInstance(hInstance);
 
+		//initalisation de la scéne etc...
 		rMoteur.Initialisations();
 
 		// Boucle d'application
