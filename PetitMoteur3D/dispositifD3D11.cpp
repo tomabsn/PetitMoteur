@@ -8,6 +8,8 @@ namespace PM3D
 {
 CDispositifD3D11::~CDispositifD3D11()
 {
+	pSwapChain->SetFullscreenState(FALSE, NULL); // passer en mode fenêtré
+
 	if (pImmediateContext)
 	{
 		pImmediateContext->ClearState();
@@ -17,7 +19,7 @@ CDispositifD3D11::~CDispositifD3D11()
 	DXRelacher(pImmediateContext);
 	DXRelacher(pSwapChain);
 	DXRelacher(pD3DDevice);
-	pSwapChain->SetFullscreenState(FALSE, NULL); // passer en mode fenêtré
+	
 }
 
 //	FONCTION : CDispositifD3D11, constructeur paramètré 
@@ -87,11 +89,13 @@ CDispositifD3D11::CDispositifD3D11(
 	desc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED; 
 	CInfoDispositif DispoVoulu(desc); 
 	DispoVoulu.GetDesc(desc); 
+
 	width = desc.Width;
 	height = desc.Height; 
 
 	largeurEcran = width;
 	hauteurEcran = height;
+
 	sd.BufferCount = 1; 
 	sd.BufferDesc.Width = desc.Width; 
 	sd.BufferDesc.Height = desc.Height; 

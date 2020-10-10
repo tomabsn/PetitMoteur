@@ -6,6 +6,7 @@ namespace PM3D {
 	// Pour obtenir les informations à partir d’un numéro d’adaptateur 
 	// 0 = courant = ADAPTATEUR_COURANT
 	CInfoDispositif::CInfoDispositif(int NoAdaptateur) {
+		//un seul adaptateur ici
 		IDXGIFactory* pFactory = nullptr; 
 		IDXGIAdapter* pAdapter = nullptr; 
 		IDXGIOutput* pOutput = nullptr;
@@ -43,7 +44,7 @@ namespace PM3D {
 	}
 
 	CInfoDispositif::CInfoDispositif(DXGI_MODE_DESC modeDesc) { 
-		// Énumération des adaptateurs 
+		// Énumération des adaptateurs, plusieurs adaptateur
 		IDXGIFactory * pFactory = nullptr;
 
 		CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&pFactory);
