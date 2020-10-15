@@ -119,9 +119,4 @@
       <Filter>Fichiers de ressources</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="MiniPhong.fx">
-      <Filter>Fichiers sources</Filter>
-    </FxCompile>
-  </ItemGroup>
 </Project>

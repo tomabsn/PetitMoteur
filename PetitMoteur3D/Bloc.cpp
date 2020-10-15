@@ -129,6 +129,7 @@ namespace PM3D {
 		// Initialiser et sélectionner les « constantes » du VS 
 		ShadersParams sp; 
 		XMMATRIX viewProj = CMoteurWindows::GetInstance().GetMatViewProj(); 
+
 		sp.matWorldViewProj = XMMatrixTranspose(matWorld * viewProj); 
 		sp.matWorld = XMMatrixTranspose(matWorld); 
 		sp.vLumiere = XMVectorSet(-10.0f, 10.0f, -10.0f, 1.0f); 
@@ -149,7 +150,6 @@ namespace PM3D {
 		// Activer le PS 
 		pImmediateContext->PSSetShader( pPixelShader, nullptr, 0 ); 
 		pImmediateContext->PSSetConstantBuffers( 0, 1, &pConstantBuffer );
-
 
 		// **** Rendu de l’objet 
 		pImmediateContext->DrawIndexed(ARRAYSIZE(index_bloc), 0, 0);

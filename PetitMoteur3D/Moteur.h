@@ -129,7 +129,6 @@ protected:
 	virtual int InitScene() {
 		if (!InitObjets()) return -1;
 
-
 		// Initialisation des matrices View et Proj 
 		// Dans notre cas, ces matrices sont fixes 
 		matView = XMMatrixLookAtLH( XMVectorSet( 0.0f, 0.0f,-10.0f, 1.0f ), XMVectorSet( 0.0f, 0.0f, 0.0f, 1.0f ), XMVectorSet( 0.0f, 1.0f, 0.0f, 1.0f ) );
@@ -144,9 +143,7 @@ protected:
 	}
 
 	bool InitObjets() {
-
 		ListeScene.emplace_back(std::make_unique<CBlocEffet1>(2.0f, 2.0f, 2.0f, pDispositif));
-		//ListeScene.emplace_back(std::make_unique<CTerrain>());
 		return true;
 	}
 

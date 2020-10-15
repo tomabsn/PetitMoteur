@@ -15,12 +15,9 @@ namespace PM3D {
 		CDispositifD3D11* pDispositif;
 		ID3D11Buffer* pVertexBuffer;
 		ID3D11Buffer* pIndexBuffer;
-		void InitShaders();
 		void InitEffet();
-		ID3D11VertexShader* pVertexShader;
 		ID3D11InputLayout* pVertexLayout;
 		ID3D11Buffer* pConstantBuffer;
-		ID3D11PixelShader* pPixelShader;
 
 		XMMATRIX matWorld;
 
