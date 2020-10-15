@@ -5,23 +5,20 @@
 #include "util.h"
 #include "resource.h"
 
-const uint16_t index_bloc[36] = {
-	0,1,2, // devant 
-	0,2,3, // devant 
-	5,6,7, // arrière 
-	5,7,4, // arrière 
-	8,9,10, // dessous 
-	8,10,11, // dessous 
-	13,14,15, // dessus 
-	13,15,12, // dessus 
-	19,16,17, // gauche 
-	19,17,18, // gauche 
-	20,21,22, // droite 
-	20,22,23 // droite };
+//structure pour communiquer entre VS et PS
+//tampon de constante 
+struct ShadersParams {
+	XMMATRIX matWorldViewProj; // la matrice totale 
+	XMMATRIX matWorld; // matrice de transformation dans le monde 
+	XMVECTOR vLumiere; // la position de la source d’éclairage (Point) 
+	XMVECTOR vCamera; // la position de la caméra 
+	XMVECTOR vAEcl; // la valeur ambiante de l’éclairage 
+	XMVECTOR vAMat; // la valeur ambiante du matériau 
+	XMVECTOR vDEcl; // la valeur diffuse de l’éclairage 
+	XMVECTOR vDMat; // la valeur diffuse du matériau 
 };
 
 namespace PM3D {
-
 
 	CBloc::CBloc(const float dx, const float dy, const float dz, CDispositifD3D11* pDispositif_) : pDispositif(pDispositif_) {
 		rotation = 0.0f;
@@ -128,13 +125,32 @@ namespace PM3D {
 		pImmediateContext->IASetInputLayout(pVertexLayout); 
 		// Activer le VS 
 		pImmediateContext->VSSetShader(pVertexShader, nullptr, 0); 
+
 		// Initialiser et sélectionner les « constantes » du VS 
-		const XMMATRIX viewProj = CMoteurWindows::GetInstance().GetMatViewProj(); 
-		const XMMATRIX matWorldViewProj = XMMatrixTranspose(matWorld * viewProj ) ; 
-		pImmediateContext->UpdateSubresource( pConstantBuffer, 0, nullptr, &matWorldViewProj, 0, 0 ); 
-		pImmediateContext->VSSetConstantBuffers( 0, 1, &pConstantBuffer ); 
+		ShadersParams sp; 
+		XMMATRIX viewProj = CMoteurWindows::GetInstance().GetMatViewProj(); 
+		sp.matWorldViewProj = XMMatrixTranspose(matWorld * viewProj); 
+		sp.matWorld = XMMatrixTranspose(matWorld); 
+		sp.vLumiere = XMVectorSet(-10.0f, 10.0f, -10.0f, 1.0f); 
+		sp.vCamera = XMVectorSet(0.0f, 0.0f, -10.0f, 1.0f); 
+		sp.vAEcl = XMVectorSet(0.2f, 0.2f, 0.2f, 1.0f); 
+		sp.vAMat = XMVectorSet(0.5f, 0.0f, 0.0f, 1.0f); //changer la couleur de notre cube 
+		sp.vDEcl = XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f); 
+		sp.vDMat = XMVectorSet(0.5f, 0.0f, 0.0f, 1.0f); //changer la couleur de notre cube 
+
+		pImmediateContext->UpdateSubresource(pConstantBuffer, 0, nullptr, &sp, 0, 0); 
+		
+		//recupere les param de sortie du VS et les places dans pConstantBuffer
+		pImmediateContext->VSSetConstantBuffers(0, 1, &pConstantBuffer); 
+		
+		// Pas de Geometry Shader 
+		pImmediateContext->GSSetShader(nullptr, nullptr,0); 
+		
 		// Activer le PS 
-		pImmediateContext->PSSetShader(pPixelShader, nullptr, 0); 
+		pImmediateContext->PSSetShader( pPixelShader, nullptr, 0 ); 
+		pImmediateContext->PSSetConstantBuffers( 0, 1, &pConstantBuffer );
+
+
 		// **** Rendu de l’objet 
 		pImmediateContext->DrawIndexed(ARRAYSIZE(index_bloc), 0, 0);
 	}
@@ -142,7 +158,7 @@ namespace PM3D {
 	void CBloc::InitShaders() { // Compilation et chargement du vertex shader 
 		ID3D11Device* pD3DDevice = pDispositif->GetD3DDevice(); 
 		ID3DBlob* pVSBlob = nullptr; 
-		DXEssayer(D3DCompileFromFile(L"vs1.vhl", nullptr, nullptr, "VS1", "vs_5_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &pVSBlob, nullptr), DXE_FICHIER_VS);
+		DXEssayer(D3DCompileFromFile(L"MiniPhong.vhl", nullptr, nullptr, "MiniPhongVS", "vs_5_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &pVSBlob, nullptr), DXE_FICHIER_VS);
 		DXEssayer(pD3DDevice->CreateVertexShader(pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), nullptr, &pVertexShader), DXE_CREATION_VS);
 
 		// Créer l’organisation des sommets 
@@ -155,19 +171,19 @@ namespace PM3D {
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd)); 
 		bd. Usage = D3D11_USAGE_DEFAULT; 
-		bd. ByteWidth = sizeof(matWorld);
+		bd.ByteWidth = sizeof(ShadersParams);
 		bd. BindFlags = D3D11_BIND_CONSTANT_BUFFER; 
 		bd. CPUAccessFlags = 0; pD3DDevice->CreateBuffer(&bd, nullptr, &pConstantBuffer);
 
 		// Compilation et chargement du pixel shader 
 		ID3DBlob* pPSBlob = nullptr; 
-		DXEssayer(D3DCompileFromFile(L"ps1.phl", nullptr, nullptr, "PS1", "ps_5_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &pPSBlob, nullptr), DXE_FICHIER_PS); 
+		DXEssayer(D3DCompileFromFile(L"MiniPhong.phl", nullptr, nullptr, "MiniPhongPS", "ps_5_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &pPSBlob, nullptr), DXE_FICHIER_PS); 
 		DXEssayer(pD3DDevice->CreatePixelShader(pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), nullptr, &pPixelShader), DXE_CREATION_PS); 
 		pPSBlob->Release(); // On n’a plus besoin du blob
 	}
 
 	void CBloc::Anime(float tempsEcoule) {
-		rotation = rotation + ((XM_PI * 0.02f) / 3.0f * tempsEcoule); // modifier la matrice de l’objet bloc 
+		rotation = rotation + ((XM_PI * 2.0f) / 3.0f * tempsEcoule); // modifier la matrice de l’objet bloc 
 		matWorld = XMMatrixRotationX(rotation); 
 	}
 

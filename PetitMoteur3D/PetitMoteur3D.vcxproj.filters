@@ -45,6 +45,9 @@
     <ClCompile Include="InfoDispositif.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="BlocEffet1.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Moteur.h">
@@ -86,6 +89,15 @@
     <ClInclude Include="InfoDispositif.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="BlocEffet1.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="d3dx11effect.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="d3dxGlobal.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="PetitMoteur3D.ico">
@@ -95,10 +107,21 @@
       <Filter>Fichiers de ressources</Filter>
     </None>
     <None Include="ReadMe.txt" />
+    <None Include="MiniPhong.vhl">
+      <Filter>Fichiers sources</Filter>
+    </None>
+    <None Include="MiniPhong.phl">
+      <Filter>Fichiers sources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PetitMoteur3D.rc">
       <Filter>Fichiers de ressources</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="MiniPhong.fx">
+      <Filter>Fichiers sources</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

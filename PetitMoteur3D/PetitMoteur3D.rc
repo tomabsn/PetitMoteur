@@ -135,6 +135,7 @@ BEGIN
     DXE_ERREURCREATIONTEXTURE "Erreur de création de texture"
     DXE_ERREURCREATIONDEPTHSTENCILTARGET 
                             "Erreur de création du depth stencil view"
+    DXE_ERREURCREATION_FX   "Erreur de création du FX"
 END
 
 #endif    // Français (Canada) resources

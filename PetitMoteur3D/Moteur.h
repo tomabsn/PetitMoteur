@@ -3,6 +3,7 @@
 #include "dispositif.h"
 #include "Objet3D.h" 
 #include "Bloc.h"
+#include "BlocEffet1.h"
 
 namespace PM3D
 {
@@ -55,7 +56,8 @@ public:
 		InitialisationsSpecific();
 
 		// * Initialisation du dispositif de rendu
-		pDispositif = CreationDispositifSpecific(CDS_PLEIN_ECRAN);
+		//pDispositif = CreationDispositifSpecific(CDS_PLEIN_ECRAN);
+		pDispositif = CreationDispositifSpecific(CDS_FENETRE);
 
 		// * Initialisation de la scène
 		InitScene();
@@ -73,7 +75,7 @@ public:
 		// méthode pour lire l'heure et calculer le 
 		// temps écoulé
 		const int64_t TempsCompteurCourant = GetTimeSpecific();
-		float TempsEcoule = (FLOAT)GetTimeIntervalsInSec(TempsCompteurPrecedent, TempsCompteurCourant);
+		float TempsEcoule = static_cast<float>(GetTimeIntervalsInSec(TempsCompteurPrecedent, TempsCompteurCourant));
 
 		// Est-il temps de rendre l'image?
 		if (TempsEcoule > EcartTemps)
@@ -81,8 +83,6 @@ public:
 			// Affichage optimisé 
 			pDispositif->Present(); // On enlevera «//» plus tard
 			
-
-			TempsEcoule = static_cast<float>(TempsCompteurCourant - TempsCompteurPrecedent) * static_cast<float>(EcartTemps);
 			// On prépare la prochaine image
 			AnimeScene(TempsEcoule);
 
@@ -145,7 +145,7 @@ protected:
 
 	bool InitObjets() {
 
-		ListeScene.emplace_back(std::make_unique<CBloc>(2.0f, 2.0f, 2.0f, pDispositif));
+		ListeScene.emplace_back(std::make_unique<CBlocEffet1>(2.0f, 2.0f, 2.0f, pDispositif));
 		//ListeScene.emplace_back(std::make_unique<CTerrain>());
 		return true;
 	}

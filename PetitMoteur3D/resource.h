@@ -23,6 +23,7 @@
 #define DXE_CREATION_VS                 113
 #define DXE_ERREURCREATIONTEXTURE       115
 #define DXE_ERREURCREATIONDEPTHSTENCILTARGET 116
+#define DXE_ERREURCREATION_FX           117
 #define IDR_MAINFRAME                   128
 #define IDC_STATIC                      -1
 
