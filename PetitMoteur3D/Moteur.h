@@ -4,6 +4,7 @@
 #include "Objet3D.h" 
 #include "Bloc.h"
 #include "BlocEffet1.h"
+#include "CDIManipulateur.h"
 
 namespace PM3D
 {
@@ -96,6 +97,8 @@ public:
 
 		return true;
 	}
+
+	CDIManipulateur& GetGestionnaireDeSaisie() { return GestionnaireDeSaisie; }
 
 protected:
 	virtual ~CMoteur()
@@ -199,6 +202,8 @@ protected:
 	XMMATRIX matView; 
 	XMMATRIX matProj; 
 	XMMATRIX matViewProj;
+	CDIManipulateur GestionnaireDeSaisie;
+
 };
 
 } // namespace PM3D

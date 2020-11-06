@@ -132,10 +132,14 @@ STRINGTABLE
 BEGIN
     DXE_CREATION_PS         "Erreur création du PS"
     DXE_CREATION_VS         "Erreur création du VS"
+    DXE_FICHIERTEXTUREINTROUVABLE "Fichier  texture introuvable"
     DXE_ERREURCREATIONTEXTURE "Erreur de création de texture"
     DXE_ERREURCREATIONDEPTHSTENCILTARGET 
                             "Erreur de création du depth stencil view"
     DXE_ERREURCREATION_FX   "Erreur de création du FX"
+    ERREUR_CREATION_DIRECTINPUT "Erreur de création de directInput"
+    ERREUR_CREATION_CLAVIER "Erreur de création de clavier"
+    ERREUR_CREATION_FORMAT_CLAVIER "Erreur dans le format de clavier"
 END
 
 #endif    // Français (Canada) resources

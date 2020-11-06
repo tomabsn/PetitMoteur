@@ -15,6 +15,7 @@
 #include <cstdint>
 #include <tchar.h>
 #include <iomanip> 
+#include <dinput.h>
 
 // Fichiers d'en-tête C++ RunTime
 #include <exception>

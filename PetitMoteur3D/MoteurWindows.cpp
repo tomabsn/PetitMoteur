@@ -89,6 +89,9 @@ int CMoteurWindows::Show()
 	ShowWindow(hMainWnd, SW_SHOWNORMAL);
 	UpdateWindow(hMainWnd);
 
+	// Initialisation de DirectInput 
+	GestionnaireDeSaisie.Init(hAppInstance, hMainWnd);
+
 	return 0;
 }
 

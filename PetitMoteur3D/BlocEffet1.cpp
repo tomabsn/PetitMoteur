@@ -46,40 +46,40 @@ namespace PM3D {
 		CSommetBloc sommets[24];
 
 		// Le devant du bloc 
-		sommets[0] = CSommetBloc(point[0], n0);
-		sommets[1] = CSommetBloc(point[1], n0);
-		sommets[2] = CSommetBloc(point[2], n0);
-		sommets[3] = CSommetBloc(point[3], n0);
+		sommets[0] = CSommetBloc(point[0], n0, XMFLOAT2(0.0f, 0.0f));
+		sommets[1] = CSommetBloc(point[1], n0, XMFLOAT2(1.0f, 0.0f));
+		sommets[2] = CSommetBloc(point[2], n0, XMFLOAT2(1.0f, 1.0f));
+		sommets[3] = CSommetBloc(point[3], n0, XMFLOAT2(0.0f, 1.0f));
 
 		// L’arrière du bloc 
-		sommets[4] = CSommetBloc(point[4], n1);
-		sommets[5] = CSommetBloc(point[5], n1);
-		sommets[6] = CSommetBloc(point[6], n1);
-		sommets[7] = CSommetBloc(point[7], n1);
+		sommets[4] = CSommetBloc(point[4], n1, XMFLOAT2(0.0f, 1.0f));
+		sommets[5] = CSommetBloc(point[5], n1, XMFLOAT2(0.0f, 0.0f));
+		sommets[6] = CSommetBloc(point[6], n1, XMFLOAT2(1.0f, 0.0f));
+		sommets[7] = CSommetBloc(point[7], n1, XMFLOAT2(1.0f, 1.0f));
 
 		// Le dessous du bloc 
-		sommets[8] = CSommetBloc(point[3], n2);
-		sommets[9] = CSommetBloc(point[2], n2);
-		sommets[10] = CSommetBloc(point[6], n2);
-		sommets[11] = CSommetBloc(point[5], n2);
+		sommets[8] = CSommetBloc(point[3], n2, XMFLOAT2(0.0f, 0.0f));
+		sommets[9] = CSommetBloc(point[2], n2, XMFLOAT2(1.0f, 0.0f));
+		sommets[10] = CSommetBloc(point[6], n2, XMFLOAT2(1.0f, 1.0f));
+		sommets[11] = CSommetBloc(point[5], n2, XMFLOAT2(0.0f, 1.0f));
 
 		// Le dessus du bloc 
-		sommets[12] = CSommetBloc(point[0], n3);
-		sommets[13] = CSommetBloc(point[4], n3);
-		sommets[14] = CSommetBloc(point[7], n3);
-		sommets[15] = CSommetBloc(point[1], n3);
+		sommets[12] = CSommetBloc(point[0], n3, XMFLOAT2(0.0f, 1.0f));
+		sommets[13] = CSommetBloc(point[4], n3, XMFLOAT2(0.0f, 0.0f));
+		sommets[14] = CSommetBloc(point[7], n3, XMFLOAT2(1.0f, 1.0f));
+		sommets[15] = CSommetBloc(point[1], n3, XMFLOAT2(1.0f, 0.0f));
 
 		// La face gauche 
-		sommets[16] = CSommetBloc(point[0], n4);
-		sommets[17] = CSommetBloc(point[3], n4);
-		sommets[18] = CSommetBloc(point[5], n4);
-		sommets[19] = CSommetBloc(point[4], n4);
+		sommets[16] = CSommetBloc(point[0], n4, XMFLOAT2(0.0f, 0.0f));
+		sommets[17] = CSommetBloc(point[3], n4, XMFLOAT2(1.0f, 0.0f));
+		sommets[18] = CSommetBloc(point[5], n4, XMFLOAT2(1.0f, 1.0f));
+		sommets[19] = CSommetBloc(point[4], n4, XMFLOAT2(0.0f, 1.0f));
 
 		// La face droite 
-		sommets[20] = CSommetBloc(point[1], n5);
-		sommets[21] = CSommetBloc(point[7], n5);
-		sommets[22] = CSommetBloc(point[6], n5);
-		sommets[23] = CSommetBloc(point[2], n5);
+		sommets[20] = CSommetBloc(point[1], n5, XMFLOAT2(0.0f, 0.0f));
+		sommets[21] = CSommetBloc(point[7], n5, XMFLOAT2(1.0f, 0.0f));
+		sommets[22] = CSommetBloc(point[6], n5, XMFLOAT2(1.0f, 1.0f));
+		sommets[23] = CSommetBloc(point[2], n5, XMFLOAT2(0.0f, 1.0f));
 
 		// Création du vertex buffer et copie des sommets 
 		ID3D11Device* pD3DDevice = pDispositif->GetD3DDevice();
@@ -131,9 +131,9 @@ namespace PM3D {
 		sp.vLumiere = XMVectorSet(-10.0f, 10.0f, -10.0f, 1.0f); 
 		sp.vCamera = XMVectorSet(0.0f, 0.0f, -10.0f, 1.0f); 
 		sp.vAEcl = XMVectorSet(0.2f, 0.2f, 0.2f, 1.0f); 
-		sp.vAMat = XMVectorSet(1.0f, 0.0f, 0.0f, 1.0f); 
+		sp.vAMat = XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f); 
 		sp.vDEcl = XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f); 
-		sp.vDMat = XMVectorSet(1.0f, 0.0f, 0.0f, 1.0f); 
+		sp.vDMat = XMVectorSet(1.0f, 1.0f, 0.0f, 1.0f); 
 		
 		pImmediateContext->UpdateSubresource(pConstantBuffer, 0, nullptr, &sp, 0, 0);
 

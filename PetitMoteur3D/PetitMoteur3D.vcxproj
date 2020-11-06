@@ -137,7 +137,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <AdditionalDependencies>winmm.lib;dxguid.lib;d3d11.lib;d3dcompiler.lib;DXGI.lib;effects11d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;dxguid.lib;d3d11.lib;d3dcompiler.lib;DXGI.lib;effects11d.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <FxCompile>
@@ -192,8 +192,11 @@
   <ItemGroup>
     <ClCompile Include="Bloc.cpp" />
     <ClCompile Include="BlocEffet1.cpp" />
+    <ClCompile Include="CDIManipulateur.cpp" />
+    <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="dispositif.cpp" />
     <ClCompile Include="dispositifD3D11.cpp" />
+    <ClCompile Include="GestionnaireDeTextures.cpp" />
     <ClCompile Include="Horloge.cpp" />
     <ClCompile Include="InfoDispositif.cpp" />
     <ClCompile Include="Moteur.cpp" />
@@ -206,14 +209,18 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bloc.h" />
     <ClInclude Include="BlocEffet1.h" />
+    <ClInclude Include="CDIManipulateur.h" />
     <ClInclude Include="d3dx11effect.h" />
     <ClInclude Include="d3dxGlobal.h" />
+    <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="dispositif.h" />
     <ClInclude Include="dispositifD3D11.h" />
+    <ClInclude Include="GestionnaireDeTextures.h" />
     <ClInclude Include="Horloge.h" />
     <ClInclude Include="InfoDispositif.h" />
     <ClInclude Include="Moteur.h" />
@@ -223,6 +230,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SommetBloc.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
