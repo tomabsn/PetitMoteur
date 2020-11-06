@@ -16,6 +16,8 @@ struct ShadersParams {
 	XMVECTOR vAMat; // la valeur ambiante du matériau 
 	XMVECTOR vDEcl; // la valeur diffuse de l’éclairage 
 	XMVECTOR vDMat; // la valeur diffuse du matériau 
+	//hello there
+	//re test
 };
 
 namespace PM3D {
