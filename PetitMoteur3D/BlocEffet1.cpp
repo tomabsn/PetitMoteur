@@ -22,6 +22,9 @@ struct ShadersParams {
 namespace PM3D {
 
 	CBlocEffet1::CBlocEffet1(const float dx, const float dy, const float dz, CDispositifD3D11* pDispositif_) : pDispositif(pDispositif_) {
+		pTextureD3D = 0;
+		pSampleState = 0;
+		
 		rotation = 0.0f;
 		XMFLOAT3 point[8] = {
 			XMFLOAT3(-dx / 2, dy / 2, -dz / 2),
@@ -141,6 +144,18 @@ namespace PM3D {
 		ID3DX11EffectConstantBuffer* pCB = pEffet->GetConstantBufferByName("param"); 
 		pCB->SetConstantBuffer(pConstantBuffer); 
 		
+
+		// Activation de la texture 
+		ID3DX11EffectShaderResourceVariable* variableTexture;
+
+		variableTexture = pEffet->GetVariableByName("textureEntree")->AsShaderResource();
+		variableTexture->SetResource(pTextureD3D);
+
+		// Le sampler state 
+		ID3DX11EffectSamplerVariable* variableSampler; 
+		variableSampler = pEffet->GetVariableByName("SampleState")->AsSampler(); 
+		variableSampler->SetSampler(0, pSampleState);
+
 		// **** Rendu de l’objet 
 		pPasse->Apply(0, pImmediateContext);
 
@@ -163,7 +178,7 @@ namespace PM3D {
 		pD3DDevice->CreateBuffer(&bd, NULL, &pConstantBuffer);
 
 		//pour l'effet
-		ID3DBlob* pFXBlob = NULL;
+		ID3DBlob* pFXBlob = nullptr;
 
 		DXEssayer(D3DCompileFromFile(L"MiniPhong.fx", 0, 0, 0, "fx_5_0", 0, 0, &pFXBlob, 0), DXE_ERREURCREATION_FX);
 		
@@ -186,11 +201,35 @@ namespace PM3D {
 	
 		pVertexLayout = NULL;
 		DXEssayer(pD3DDevice->CreateInputLayout(CSommetBloc::layout, CSommetBloc::numElements, vsCodePtr, vsCodeLen, &pVertexLayout), DXE_CREATIONLAYOUT);
+	
+		// Initialisation des paramètres de sampling de la texture 
+		D3D11_SAMPLER_DESC samplerDesc;
+	
+		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP; 
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP; 
+		samplerDesc.MipLODBias = 0.0f; 
+		samplerDesc.MaxAnisotropy = 4;
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS; 
+		samplerDesc.BorderColor[0] = 0; 
+		samplerDesc.BorderColor[1] = 0; 
+		samplerDesc.BorderColor[2] = 0; 
+		samplerDesc.BorderColor[3] = 0; 
+		samplerDesc.MinLOD = 0; 
+		samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+		//Création de l'état de sampling 
+		pD3DDevice->CreateSamplerState(&samplerDesc, &pSampleState);
 	}
 
 	void CBlocEffet1::Anime(float tempsEcoule) {
 		rotation = rotation + ((XM_PI * 2.0f) / 3.0f * tempsEcoule); // modifier la matrice de l’objet bloc 
 		matWorld = XMMatrixRotationX(rotation);
+	}
+
+	void CBlocEffet1::setTexture(CTexture* pTexture) {
+		pTextureD3D = pTexture->GetD3DTexture();
 	}
 
 	CBlocEffet1::~CBlocEffet1() {

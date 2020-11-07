@@ -5,6 +5,7 @@
 #include "Bloc.h"
 #include "BlocEffet1.h"
 #include "CDIManipulateur.h"
+#include "GestionnaireDeTextures.h"
 
 namespace PM3D
 {
@@ -100,6 +101,8 @@ public:
 
 	CDIManipulateur& GetGestionnaireDeSaisie() { return GestionnaireDeSaisie; }
 
+	CGestionnaireDeTextures& GeTextureManager() { return TextureManager; }
+
 protected:
 	virtual ~CMoteur()
 	{
@@ -146,7 +149,18 @@ protected:
 	}
 
 	bool InitObjets() {
-		ListeScene.emplace_back(std::make_unique<CBlocEffet1>(2.0f, 2.0f, 2.0f, pDispositif));
+
+		CBlocEffet1* pBloc;
+
+		// Création d’un cube de 2 X 2 X 2 unités 
+		// Le bloc est créé dans notre programme et sur le dispositif 
+		pBloc = new CBlocEffet1( 2, 2, 2, pDispositif );
+
+		// Lui assigner une texture 
+		pBloc->setTexture(TexturesManager.GetNewTexture(L"image/MyTexture.dds",pDispositif));
+
+		// Puis, il est ajouté à la scène 
+		ListeScene.emplace_back(pBloc);
 		return true;
 	}
 
@@ -204,6 +218,8 @@ protected:
 	XMMATRIX matViewProj;
 	CDIManipulateur GestionnaireDeSaisie;
 
+	//gestionnaire de texture
+	CGestionnaireDeTextures TexturesManager;
 };
 
 } // namespace PM3D
