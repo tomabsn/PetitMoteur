@@ -192,6 +192,7 @@
   <ItemGroup>
     <ClCompile Include="Bloc.cpp" />
     <ClCompile Include="BlocEffet1.cpp" />
+    <ClCompile Include="BlocMesh.cpp" />
     <ClCompile Include="CDIManipulateur.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="dispositif.cpp" />
@@ -214,6 +215,7 @@
   <ItemGroup>
     <ClInclude Include="Bloc.h" />
     <ClInclude Include="BlocEffet1.h" />
+    <ClInclude Include="BlocMesh.h" />
     <ClInclude Include="CDIManipulateur.h" />
     <ClInclude Include="d3dx11effect.h" />
     <ClInclude Include="d3dxGlobal.h" />

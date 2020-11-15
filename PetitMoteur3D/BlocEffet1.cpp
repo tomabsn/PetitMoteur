@@ -131,12 +131,12 @@ namespace PM3D {
 
 		sp.matWorldViewProj = XMMatrixTranspose(matWorld * viewProj); 
 		sp.matWorld = XMMatrixTranspose(matWorld); 
-		sp.vLumiere = XMVectorSet(-10.0f, 10.0f, -10.0f, 1.0f); 
+		sp.vLumiere = XMVectorSet(-10.0f, -10.0f, -5.0f, 1.0f); 
 		sp.vCamera = XMVectorSet(0.0f, 0.0f, -10.0f, 1.0f); 
-		sp.vAEcl = XMVectorSet(0.2f, 0.2f, 0.2f, 1.0f); 
-		sp.vAMat = XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f); 
-		sp.vDEcl = XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f); 
-		sp.vDMat = XMVectorSet(1.0f, 1.0f, 0.0f, 1.0f); 
+		sp.vAEcl = XMVectorSet(0.2f, 0.2f, 0.2f, 1.0f); //couleur ambiante genre totalement claire sans lumiere ou alors sombre sans lumiere
+		sp.vAMat = XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f); //la couleur de mon matériau sans lumiere	
+		sp.vDEcl = XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f); //la couleur de mon éclairage
+		sp.vDMat = XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f); //la couleur de mon matériau sous la lumiere
 		
 		pImmediateContext->UpdateSubresource(pConstantBuffer, 0, nullptr, &sp, 0, 0);
 
